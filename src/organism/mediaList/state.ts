@@ -6,6 +6,7 @@ export interface IMediaItem {
 
 interface IMediaListState {
     isLoading: boolean;
+    error?: string;
     data: {
       items: IMediaItem[];
     };
@@ -27,6 +28,10 @@ export const mediaListSlice = createSlice({
     },
     loadingDone(state, action: PayloadAction<IMediaItem[]>) {
       state.data.items = action.payload;
+      state.isLoading = false;
+    },
+    loadingError(state, action: PayloadAction<string>) {
+      state.error = action.payload;
       state.isLoading = false;
     },
   }
