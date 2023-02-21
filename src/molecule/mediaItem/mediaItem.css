@@ -1,0 +1,14 @@
+.mol-media-item {
+    display: inline-block;
+
+    border-radius: 14px;
+    width: 200px;
+
+    background-color: gray;
+    overflow: hidden;
+}
+
+.mol-media-item__image {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+}

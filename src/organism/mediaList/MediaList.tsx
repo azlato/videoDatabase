@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import Spinner from '../../atom/Spinner';
+import MediaListMolecule from '../../molecule/mediaList/MediaList';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { itemsSelector, isLoadingSelector, isErrorStateSelector } from './selector';
 import { ACTION } from './state';
@@ -35,20 +35,7 @@ function MediaList() {
         });
     }, []);
 
-    if (isErrorState) {
-        return <div>Data could not be loaded</div>;
-    }
-
-    return <div>
-        <h1>Media list</h1>
-        {isLoading ?
-            <Spinner/>
-        :
-            <ul>
-                {items.map((item: any) => (<li key={item.name}>{item.name}</li>))}
-            </ul>
-        }
-    </div>
+    return <MediaListMolecule isErrorState={isErrorState} isLoading={isLoading} items={items}/>;
 }
 
 export default MediaList;

@@ -1,0 +1,10 @@
+.mol-media-list__error {
+    color: red;
+}
+
+.mol-media-list {
+    display: flex;
+
+    list-style: none;
+    flex-wrap: wrap;
+}
