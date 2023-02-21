@@ -1,14 +1,34 @@
 .mol-media-item {
     display: inline-block;
 
+    border: 0;
+
     border-radius: 14px;
-    width: 200px;
+    width: 400px;
+    max-width: 100%;
+    margin-right: 6px;
+    margin-bottom: 6px;
+    padding-bottom: 6px;
 
     background-color: gray;
     overflow: hidden;
+
+    cursor: pointer;
 }
 
-.mol-media-item__image {
+.mol-media-item__media {
     width: 100%;
     aspect-ratio: 16 / 9;
+}
+
+.mol-media-item__image--hidden {
+    display: none;
+}
+
+.mol-media-item__video {
+    width: 100%;
+}
+
+.mol-media-item__video--hidden {
+    display: none;
 }

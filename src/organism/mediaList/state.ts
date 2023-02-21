@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 export interface IMediaItem {
   name: string;
   iconUri: string;
+  manifestUri: string;
 }
 
 interface IMediaListState {
