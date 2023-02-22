@@ -1,9 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+
+interface IRequestMediaData {
+  name: string;
+  iconUri: string;
+  manifestUri: string;
+  licenseServers: {[key: string]: string};
+}
+
 export interface IMediaItem {
   name: string;
   iconUri: string;
   manifestUri: string;
+  hasDrm: boolean;
 }
 
 interface IMediaListState {
@@ -21,6 +30,15 @@ const initialState: IMediaListState = {
     }
 }
 
+function createItem(requestMediaData: IRequestMediaData): IMediaItem {
+  return {
+    name: requestMediaData.name,
+    iconUri: requestMediaData.iconUri,
+    manifestUri: requestMediaData.manifestUri,
+    hasDrm: !!Object.keys(requestMediaData.licenseServers).length,
+  }
+}
+
 export const mediaListSlice = createSlice({
   name: "mediaList",
   initialState,
@@ -28,8 +46,8 @@ export const mediaListSlice = createSlice({
     loading(state) {
       state.isLoading = true;
     },
-    loadingDone(state, action: PayloadAction<IMediaItem[]>) {
-      state.data.items = action.payload;
+    loadingDone(state, action: PayloadAction<IRequestMediaData[]>) {
+      state.data.items = action.payload.map(createItem);
       state.isLoading = false;
     },
     loadingError(state, action: PayloadAction<string>) {
