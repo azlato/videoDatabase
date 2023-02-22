@@ -21,7 +21,7 @@
     cursor: default;
 }
 
-.mol-media-item--drm-protection::before {
+.mol-media-item--drm-protection::after {
     display: inline-block;
 
     padding: 6px;
@@ -38,8 +38,10 @@
 }
 
 .mol-media-item__media {
+    position: relative;
+
     width: 100%;
-    height: 200px;
+    height: 230px;
 
     background-color: black;
 }
@@ -61,7 +63,8 @@
     font-size: 1rem;
 }
 
-.mol-media-item__video {
+.mol-media-item__video,
+.mol-media-item__media video {
     width: 100%;
     height: 100%;
 
