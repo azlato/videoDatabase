@@ -8,14 +8,20 @@ export const itemsSelector = ({mediaList: {data: {items}, filters}}: RootState) 
     const filterEntries = Object.entries(filters);
 
     return items.filter(item => filterEntries.every(([itemFieldName, filter]) => {
+        console.log()
         type ObjectKey = keyof typeof item;
         const itemKey = itemFieldName as ObjectKey;
+        // if (!item[itemKey]) {
+        //     return true;
+        // }
+
+        console.log(itemFieldName, item.hasDrm, item.name);
 
         switch (filter.type) {
             case FilterType.String:
-                return item[itemKey] ? item[itemKey].toString().toLowerCase().includes(filter.value.toLowerCase()) : true;
+                return item[itemKey].toString().toLowerCase().includes(filter.value.toLowerCase());
             case FilterType.Boolean:
-                return item[itemKey] ? item[itemKey].toString().toLowerCase().includes(filter.value.toLowerCase()) : true;
+                return filter.value === "" || item[itemKey].toString() === filter.value;
             default:
                 return true;
         }

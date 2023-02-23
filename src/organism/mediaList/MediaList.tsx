@@ -5,13 +5,17 @@ import Filter, { IFilter, FilterType } from '../../molecule/filter/Filter';
 import { itemsSelector, isLoadingSelector, isErrorStateSelector } from './selector';
 import { ACTION } from './state';
 
-const RESOURCE_URL = "https://gist.githubusercontent.com/nextsux/f6e0327857c88caedd2dab13affb72c1/raw/04441487d90a0a05831835413f5942d58026d321/videos.json";
-const LOCAL_STORAGE_KEY = "mediaList";
+const RESOURCE_URL = 'https://gist.githubusercontent.com/nextsux/f6e0327857c88caedd2dab13affb72c1/raw/04441487d90a0a05831835413f5942d58026d321/videos.json';
+const LOCAL_STORAGE_KEY = 'mediaList';
 
 const FILTERS: IFilter[] = [{
     label: 'Name',
     fieldName: 'name',
     type: FilterType.String,
+}, {
+    label: 'Has DRM',
+    fieldName: 'hasDrm',
+    type: FilterType.Boolean,
 }];
 
 function MediaList() {
@@ -40,7 +44,7 @@ function MediaList() {
                     try {
                         dispatch(ACTION.loadingDone(JSON.parse(localData)));
                     } catch(error) {
-                        dispatch(ACTION.loadingError("Local data could not be parsed"));
+                        dispatch(ACTION.loadingError('Local data could not be parsed'));
                     }
                 } else {
                     dispatch(ACTION.loadingError(`Fetch error: ${JSON.stringify(error)}`));

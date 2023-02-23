@@ -1,5 +1,6 @@
 import classnames from "classnames";
 import './filter.css';
+import IndeterminateCheckbox from "../../atom/indeterminateCheckbox/IndeterminateCheckbox";
 
 interface IProps {
     className?: string;
@@ -21,15 +22,24 @@ export interface IFilter {
 function Filter({ className, filters, onChange }: IProps) {
     return (
         <div className={classnames(className, 'mol-filter')}>
+            <div className="mol-filter__heading">Filters:</div>
             {filters.map((filter) =>
                 <div key={filter.fieldName} className="mol-filter__item">
                     <label className="mol-filter__item-label">
                         {filter.label}
-                        <input
-                            className="mol-filter__item-input"
-                            type="search"
-                            onChange={(event) => onChange(filter, event.target.value)}
-                        />
+                        {filter.type === FilterType.Boolean ?
+                            <IndeterminateCheckbox
+                                className="mol-filter__item-input"
+                                onChange={(value: string) => onChange(filter, value)}
+                            />
+                        :
+                            <input
+                                className="mol-filter__item-input"
+                                type="search"
+                                onChange={(event) => onChange(filter, event.target.value)}
+                            />
+                        }
+
                     </label>
                 </div>
             )}
