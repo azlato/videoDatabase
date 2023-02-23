@@ -16,24 +16,35 @@ function MediaList() {
     useEffect(() => {
         dispatch(ACTION.loading());
 
-        fetch(RESOURCE_URL).then((response) => response.json()).then((data) => {
-            dispatch(ACTION.loadingDone(data));
+        const abortController = new AbortController();
+        fetch(RESOURCE_URL, {signal: abortController.signal})
+            .then((response) => response.json())
+            .then((data) => {
+                dispatch(ACTION.loadingDone(data));
 
-            window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data));
-        }).catch((error) => {
-            const localData = window.localStorage.getItem(LOCAL_STORAGE_KEY);
-            if (localData) {
-                try {
-                    dispatch(ACTION.loadingDone(JSON.parse(localData)));
-                } catch(error) {
-                    dispatch(ACTION.loadingError("Local data could not be parsed"));
+                window.localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data));
+            }).catch((error) => {
+                if (abortController.signal.aborted) {
+                    return;
                 }
-            } else {
-                dispatch(ACTION.loadingError(`Fetch error: ${JSON.stringify(error)}`));
-            }
 
-        });
-    }, []);
+                const localData = window.localStorage.getItem(LOCAL_STORAGE_KEY);
+                if (localData) {
+                    try {
+                        dispatch(ACTION.loadingDone(JSON.parse(localData)));
+                    } catch(error) {
+                        dispatch(ACTION.loadingError("Local data could not be parsed"));
+                    }
+                } else {
+                    dispatch(ACTION.loadingError(`Fetch error: ${JSON.stringify(error)}`));
+                }
+
+            });
+
+        return () => {
+            abortController.abort();
+        };
+    }, [dispatch]);
 
     return <MediaListMolecule isErrorState={isErrorState} isLoading={isLoading} items={items}/>;
 }

@@ -46,6 +46,24 @@
     background-color: black;
 }
 
+
+.mol-media-item--playable::after {
+    display: inline-block;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    border-radius: 50%;
+    padding: 12px;
+
+    content: '►';
+    color: white;
+    font-weight: bold;
+    background-color: black;
+}
+
 .mol-media-item__image {
     width: 100%;
     height: 100%;

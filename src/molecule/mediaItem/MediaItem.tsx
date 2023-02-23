@@ -1,3 +1,4 @@
+import classnames from 'classnames';
 import ShakaPlayer from 'shaka-player-react';
 import 'shaka-player-react/dist/controls.css';
 import {useState, useRef} from 'react';
@@ -37,7 +38,14 @@ function MediaItem({item}: IProps) {
     }
 
     return (
-        <button className={item.hasDrm ? "mol-media-item mol-media-item--drm-protection" : "mol-media-item"} onClick={item.hasDrm ? undefined : onClickCallback}>
+        <button
+            className={classnames({
+                "mol-media-item": true,
+                "mol-media-item--drm-protection": item.hasDrm,
+                "mol-media-item--playable": !isPlaying && !item.hasDrm
+            })}
+            onClick={item.hasDrm ? undefined : onClickCallback}
+        >
             <div className="mol-media-item__media">
                 <img className={!isPlaying ? 'mol-media-item__image' : 'mol-media-item__image mol-media-item__image--hidden'} src={item.iconUri} alt="" />
                 <ShakaPlayer className={isPlaying ? 'mol-media-item__video' : 'mol-media-item__video mol-media-item__video--hidden'} ref={videoRef} />;
