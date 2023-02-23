@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
+import { FilterType, IFilter } from '../../molecule/filter/Filter'
 
 interface IRequestMediaData {
   name: string;
@@ -15,19 +15,26 @@ export interface IMediaItem {
   hasDrm: boolean;
 }
 
+interface IFilterData {
+  value: string;
+  type: FilterType;
+}
+
 interface IMediaListState {
     isLoading: boolean;
     error?: string;
     data: {
       items: IMediaItem[];
     };
+    filters: {[key: string]: IFilterData};
 }
 
 const initialState: IMediaListState = {
     isLoading: true,
     data: {
         items: []
-    }
+    },
+    filters: {},
 }
 
 function createItem(requestMediaData: IRequestMediaData): IMediaItem {
@@ -54,6 +61,9 @@ export const mediaListSlice = createSlice({
       state.error = action.payload;
       state.isLoading = false;
     },
+    setFilterValue(state, {payload: {fieldName, type, value}}: PayloadAction<IFilter & {value: string}>) {
+      state.filters[fieldName] = {type, value};
+    }
   }
 });
 

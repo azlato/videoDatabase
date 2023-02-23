@@ -1,0 +1,19 @@
+.mol-filter {
+    background-color: #444;
+    padding: 20px 14px;
+}
+
+.mol-filter__item {
+    display: block;
+}
+
+.mol-filter__item-label {
+    vertical-align: middle;
+}
+
+.mol-filter__item-input {
+    margin-left: 8px;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 4px 6px;
+}

@@ -1,11 +1,18 @@
 import { useEffect } from 'react';
 import MediaListMolecule from '../../molecule/mediaList/MediaList';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import Filter, { IFilter, FilterType } from '../../molecule/filter/Filter';
 import { itemsSelector, isLoadingSelector, isErrorStateSelector } from './selector';
 import { ACTION } from './state';
 
 const RESOURCE_URL = "https://gist.githubusercontent.com/nextsux/f6e0327857c88caedd2dab13affb72c1/raw/04441487d90a0a05831835413f5942d58026d321/videos.json";
 const LOCAL_STORAGE_KEY = "mediaList";
+
+const FILTERS: IFilter[] = [{
+    label: 'Name',
+    fieldName: 'name',
+    type: FilterType.String,
+}];
 
 function MediaList() {
     const isErrorState = useAppSelector(isErrorStateSelector);
@@ -46,7 +53,14 @@ function MediaList() {
         };
     }, [dispatch]);
 
-    return <MediaListMolecule isErrorState={isErrorState} isLoading={isLoading} items={items}/>;
+    const onFilterChange = (filter: IFilter, value: string) => {
+        dispatch(ACTION.setFilterValue({...filter, value}));
+    }
+
+    return <>
+        <Filter filters={FILTERS} onChange={onFilterChange} />
+        <MediaListMolecule isErrorState={isErrorState} isLoading={isLoading} items={items}/>
+    </>
 }
 
 export default MediaList;

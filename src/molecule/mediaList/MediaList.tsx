@@ -1,4 +1,4 @@
-import Spinner from '../../atom/Spinner';
+import Spinner from '../../atom/spinner/Spinner';
 import MediaItem from '../../molecule/mediaItem/MediaItem';
 import {IMediaItem} from '../../organism/mediaList/state';
 import './mediaList.css';
