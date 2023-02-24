@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import MediaListMolecule from '../../molecule/mediaList/MediaList';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import Filter, { IFilter, FilterType } from '../../molecule/filter/Filter';
-import { itemsSelector, isLoadingSelector, isErrorStateSelector } from './selector';
+import { filteredItemsSelector, isLoadingSelector, isErrorStateSelector } from './selector';
 import { ACTION } from './state';
 
 const RESOURCE_URL = 'https://gist.githubusercontent.com/nextsux/f6e0327857c88caedd2dab13affb72c1/raw/04441487d90a0a05831835413f5942d58026d321/videos.json';
@@ -21,12 +21,10 @@ const FILTERS: IFilter[] = [{
 function MediaList() {
     const isErrorState = useAppSelector(isErrorStateSelector);
     const isLoading = useAppSelector(isLoadingSelector);
-    const items = useAppSelector(itemsSelector);
+    const items = useAppSelector(filteredItemsSelector);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        dispatch(ACTION.loading());
-
         const abortController = new AbortController();
         fetch(RESOURCE_URL, {signal: abortController.signal})
             .then((response) => response.json())
