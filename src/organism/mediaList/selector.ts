@@ -1,21 +1,19 @@
 import { createSelector } from 'reselect';
 import { RootState } from '../../store/state';
 import { FilterType } from '../../molecule/filter/Filter';
+import { IMediaItem } from './state';
 
 const itemsSelector = ({mediaList: {data: {items}}}: RootState) => items;
 const filtersSelector = ({mediaList: {filters}}: RootState) => filters;
+const sortSelector = ({mediaList: {sort}}: RootState) => sort;
 export const isLoadingSelector = (state: RootState) => state.mediaList.isLoading;
 export const isErrorStateSelector = (state: RootState) => !!state.mediaList.error;
 
 export const filteredItemsSelector = createSelector(
-    [itemsSelector, filtersSelector],
-    (items, filters) => {
-        if (!Object.keys(filters).length) {
-            return items;
-        }
+    [itemsSelector, filtersSelector, sortSelector],
+    (items, filters, sort) => {
         const filterEntries = Object.entries(filters);
-
-        return items.filter(item => filterEntries.every(([itemFieldName, filter]) => {
+        const filteredItems: IMediaItem[] = Object.keys(filters).length ? items.filter(item => filterEntries.every(([itemFieldName, filter]) => {
             type ObjectKey = keyof typeof item;
             const itemKey = itemFieldName as ObjectKey;
             switch (filter.type) {
@@ -26,6 +24,23 @@ export const filteredItemsSelector = createSelector(
                 default:
                     return true;
             }
-        }));
+        })) : items;
+
+        if (sort) {
+            return filteredItems.slice().sort((a: IMediaItem, b: IMediaItem) => {
+                type ObjectKey = keyof typeof a;
+                const itemKey = sort.fieldName as ObjectKey;
+                const aValue = `${a[itemKey]}`;
+                const bValue = `${b[itemKey]}`;
+
+                return (
+                    sort.sortOrderDescending ?
+                    bValue.localeCompare(aValue, "cs", { numeric: true }) :
+                    aValue.localeCompare(bValue, "cs", { numeric: true })
+                );
+            });
+        }
+
+        return filteredItems;
     }
 )

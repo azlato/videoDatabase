@@ -14,8 +14,6 @@ function MediaList({isErrorState, isLoading, items}: IProps) {
         return <div className='mol-media-list__error'>Data could not be loaded</div>;
     }
 
-    console.log("render list", items);
-
     return <div>
         {isLoading ?
             <Spinner/>

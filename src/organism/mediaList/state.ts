@@ -20,6 +20,11 @@ interface IFilterData {
   type: FilterType;
 }
 
+interface ISortOrder {
+  fieldName: string;
+  sortOrderDescending: boolean;
+}
+
 interface IMediaListState {
     isLoading: boolean;
     error?: string;
@@ -27,6 +32,7 @@ interface IMediaListState {
       items: IMediaItem[];
     };
     filters: {[key: string]: IFilterData};
+    sort?: ISortOrder;
 }
 
 const initialState: IMediaListState = {
@@ -63,6 +69,9 @@ export const mediaListSlice = createSlice({
     },
     setFilterValue(state, {payload: {fieldName, type, value}}: PayloadAction<IFilter & {value: string}>) {
       state.filters[fieldName] = {type, value};
+    },
+    setSortValue(state, {payload}: PayloadAction<ISortOrder>) {
+      state.sort = payload;
     }
   }
 });
