@@ -1,5 +1,4 @@
-# Video database
-Demo app with
+# Demo app: Video database
 - Fetch, display list of videos, filter and sort it
 - You can stream video via Shaka Player React
 - Atomic design with BEM CSS class naming convention
