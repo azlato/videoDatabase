@@ -7,9 +7,9 @@
 ## Used technology
 - React.js
 - TypeScript
+- Vite.js
 - Redux
 - Redux Toolkit
-- Reselect
 - Shaka Player React
 
 This project was bootstrapped with [Create vite](https://vitejs.dev/guide/#scaffolding-your-first-vite-project).

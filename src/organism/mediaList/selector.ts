@@ -1,4 +1,4 @@
-import { createSelector } from 'reselect';
+import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from '../../store/state';
 import { FilterType } from '../../molecule/filter/Filter';
 import { IMediaItem } from './state';
