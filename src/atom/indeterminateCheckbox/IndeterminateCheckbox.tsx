@@ -16,7 +16,7 @@ function IndeterminateCheckbox({className, onChange}: IProps) {
 
     const onClick = (event: React.MouseEvent<HTMLInputElement>) => {
         const el = event.target as HTMLInputElement;
-        switch(checked) {
+        switch (checked) {
 
             // unchecked, going indeterminate
             case Checked.Unchecked:
