@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { FilterType, IFilter } from '../../molecule/filter/Filter';
 import apiClient from '../../apiClient';
+import md5 from '../../md5';
 
 // eslint-disable-next-line max-len
 const RESOURCE_URL = 'https://gist.githubusercontent.com/nextsux/f6e0327857c88caedd2dab13affb72c1/raw/04441487d90a0a05831835413f5942d58026d321/videos.json';
@@ -14,6 +15,7 @@ interface IResponseItemData {
 }
 
 export interface IMediaItem {
+  id: string;
   name: string;
   iconUri: string;
   manifestUri: string;
@@ -50,6 +52,7 @@ const initialState: IMediaListState = {
 
 function createItem(requestMediaData: IResponseItemData): IMediaItem {
   return {
+    id: md5(requestMediaData.name),
     name: requestMediaData.name,
     iconUri: requestMediaData.iconUri,
     manifestUri: requestMediaData.manifestUri,

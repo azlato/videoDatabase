@@ -21,7 +21,7 @@ function MediaList({ isErrorState, isLoading, items }: IProps) {
         ? <Spinner />
         : (
           <ul className="mol-media-list">
-            {items.map((item) => (<li key={item.name}><MediaItem item={item} /></li>))}
+            {items.map((item) => (<li key={item.id}><MediaItem item={item} /></li>))}
           </ul>
         )}
     </div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import './sort.css';
 
 export interface ISort {
@@ -15,19 +15,19 @@ function Sort({ fields, onChange }: IProps) {
   const [selectValue, setSelectValue] = useState<undefined | string>(undefined);
   const [orderValue, setOrderValue] = useState<boolean>(false);
 
-  const onSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const onSelectChange = useCallback((event: React.ChangeEvent<HTMLSelectElement>) => {
     const { value } = event.target;
     setSelectValue(value);
     onChange(value, orderValue);
-  };
+  }, []);
 
-  const onOrderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const onOrderChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.checked;
     setOrderValue(value);
     if (selectValue) {
       onChange(selectValue, value);
     }
-  };
+  }, []);
 
   return (
     <div className="mol-sort">

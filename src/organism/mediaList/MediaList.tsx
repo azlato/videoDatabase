@@ -48,4 +48,4 @@ function MediaList() {
   );
 }
 
-export default MediaList;
+export default React.memo(MediaList);
