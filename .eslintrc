@@ -1,0 +1,30 @@
+{
+    "extends": [
+        "airbnb",
+        "airbnb-typescript"
+    ],
+    "parserOptions": {
+        "project": "./tsconfig.json"
+    },
+    "settings": {
+        "react": {
+            // Tells eslint-plugin-react to automatically detect the version of React to use.
+            "version": "detect"
+        },
+        // Tells eslint how to resolve imports
+        "import/resolver": {
+            "node": {
+                "paths": ["src"],
+                "extensions": [".js", ".jsx", ".ts", ".tsx"]
+            }
+        }
+    },
+    "rules": {
+        "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
+        "react/prop-types": [0],
+        "react/require-default-props": [0],
+        "max-len": ["error", 120],
+        "no-param-reassign": ["error", { "props": false }]
+    },
+    "ignorePatterns": ["dist/", "node_modules/", "vite.config.ts"]
+}
