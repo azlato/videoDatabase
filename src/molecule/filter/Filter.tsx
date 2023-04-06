@@ -8,7 +8,7 @@ interface IProps {
     onChange(filter: IFilter, value: string): void;
 }
 
-export enum FilterType {
+export const enum FilterType {
     String,
     Boolean,
 }

@@ -1,7 +1,11 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { FilterType, IFilter } from '../../molecule/filter/Filter'
+import { apiClient } from '../../apiClient';
 
-interface IRequestMediaData {
+const RESOURCE_URL = 'https://gist.githubusercontent.com/nextsux/f6e0327857c88caedd2dab13affb72c1/raw/04441487d90a0a05831835413f5942d58026d321/videos.json';
+const NAMESPACE = 'mediaList';
+
+interface IResponseItemData {
   name: string;
   iconUri: string;
   manifestUri: string;
@@ -43,7 +47,7 @@ const initialState: IMediaListState = {
     filters: {},
 }
 
-function createItem(requestMediaData: IRequestMediaData): IMediaItem {
+function createItem(requestMediaData: IResponseItemData): IMediaItem {
   return {
     name: requestMediaData.name,
     iconUri: requestMediaData.iconUri,
@@ -52,27 +56,38 @@ function createItem(requestMediaData: IRequestMediaData): IMediaItem {
   }
 }
 
+export const fetchMediaList = createAsyncThunk<IResponseItemData[]>(
+  `${NAMESPACE}/fetchMediaList`,
+  async () => {
+    const response = await apiClient.get<IResponseItemData[]>(RESOURCE_URL);
+    return response.data;
+  },
+);
+
 export const mediaListSlice = createSlice({
-  name: "mediaList",
+  name: NAMESPACE,
   initialState,
   reducers: {
-    loading(state) {
-      state.isLoading = true;
-    },
-    loadingDone(state, action: PayloadAction<IRequestMediaData[]>) {
-      state.data.items = action.payload.map(createItem);
-      state.isLoading = false;
-    },
-    loadingError(state, action: PayloadAction<string>) {
-      state.error = action.payload;
-      state.isLoading = false;
-    },
     setFilterValue(state, {payload: {fieldName, type, value}}: PayloadAction<IFilter & {value: string}>) {
       state.filters[fieldName] = {type, value};
     },
     setSortValue(state, {payload}: PayloadAction<ISortOrder>) {
       state.sort = payload;
     }
+  },
+  extraReducers(builder) {
+    builder
+      .addCase(fetchMediaList.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(fetchMediaList.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.data.items = action.payload.map(createItem);
+      })
+      .addCase(fetchMediaList.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.error.message
+      })
   }
 });
 
