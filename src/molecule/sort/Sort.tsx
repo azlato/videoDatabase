@@ -19,7 +19,7 @@ function Sort({ fields, onChange }: IProps) {
     const { value } = event.target;
     setSelectValue(value);
     onChange(value, orderValue);
-  }, []);
+  }, [orderValue]);
 
   const onOrderChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.checked;
@@ -27,7 +27,7 @@ function Sort({ fields, onChange }: IProps) {
     if (selectValue) {
       onChange(selectValue, value);
     }
-  }, []);
+  }, [selectValue]);
 
   return (
     <div className="mol-sort">
