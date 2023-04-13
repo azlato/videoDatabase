@@ -1,4 +1,8 @@
 import React, { useState, useCallback } from 'react';
+import {
+  Paper, FormControl, InputLabel, Select, MenuItem, SelectChangeEvent, Checkbox,
+} from '@mui/material';
+import SortByAlphaIcon from '@mui/icons-material/SortByAlpha';
 import './sort.css';
 
 export interface ISort {
@@ -12,11 +16,11 @@ interface IProps {
 }
 
 function Sort({ fields, onChange }: IProps) {
-  const [selectValue, setSelectValue] = useState<undefined | string>(undefined);
+  const [selectValue, setSelectValue] = useState<undefined | string>('');
   const [orderValue, setOrderValue] = useState<boolean>(false);
 
-  const onSelectChange = useCallback((event: React.ChangeEvent<HTMLSelectElement>) => {
-    const { value } = event.target;
+  const onSelectChange = useCallback((event: SelectChangeEvent) => {
+    const { value } = event.target as any;
     setSelectValue(value);
     onChange(value, orderValue);
   }, [orderValue]);
@@ -30,19 +34,34 @@ function Sort({ fields, onChange }: IProps) {
   }, [selectValue]);
 
   return (
-    <div className="mol-sort">
-      <div className="mol-sort__heading">Sort by:</div>
-      <select onChange={onSelectChange} value={selectValue} defaultValue={0}>
-        <option disabled hidden value={0}>-- default --</option>
-        {fields.map((field) => (
-          <option key={field.fieldName} value={field.fieldName}>{field.label}</option>
-        ))}
-      </select>
-      <span className="mol-sort__order-checkbox">
-        [] Ascending / [x] Descending:
-        <input type="checkbox" checked={orderValue} onChange={onOrderChange} />
-      </span>
-    </div>
+    <Paper elevation={0}>
+      <FormControl sx={{ m: 1, minWidth: 120 }}>
+        <InputLabel id="sort-select-label">Sort by</InputLabel>
+        <Select
+          labelId="sort-select-label"
+          id="sort-select"
+          label="Sort by"
+          value={selectValue}
+          defaultValue=""
+          onChange={onSelectChange}
+        >
+          <MenuItem disabled hidden value="">-- default --</MenuItem>
+          {fields.map((field) => (
+            <MenuItem key={field.fieldName} value={field.fieldName}>{field.label}</MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+
+      <FormControl sx={{ m: 1 }}>
+        <Checkbox
+          title="Sort order"
+          icon={<SortByAlphaIcon />}
+          checkedIcon={<SortByAlphaIcon />}
+          checked={orderValue}
+          onChange={onOrderChange}
+        />
+      </FormControl>
+    </Paper>
   );
 }
 
