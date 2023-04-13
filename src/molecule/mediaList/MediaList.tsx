@@ -18,7 +18,12 @@ function MediaList({ items, isLoading, isErrorState }: IProps) {
   }
 
   return (
-    <Box component="ul" sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+    <Box
+      component="ul"
+      sx={{
+        display: 'flex', flexWrap: 'wrap', justifyContent: 'center', padding: '0px',
+      }}
+    >
       {isLoading
         ? SKELETON_LIST.map((item) => (
           <Box key={item} sx={{ m: 1, listStyle: 'none' }} component="li">

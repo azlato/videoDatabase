@@ -43,7 +43,7 @@ function MediaItem({ item }: IProps) {
   }, [isPlaying, item]);
 
   return (
-    <Card sx={{ maxWidth: { xs: MEDIA_WIDTH_XS, sm: MEDIA_WIDTH_DEFAULT } }}>
+    <Card sx={{ width: MEDIA_WIDTH_DEFAULT, maxWidth: '100%' }}>
       <CardActionArea
         disabled={item.hasDrm}
         onClick={item.hasDrm ? undefined : onClickCallback}
