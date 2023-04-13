@@ -45,6 +45,7 @@ function MediaItem({ item }: IProps) {
   return (
     <Card sx={{ maxWidth: { xs: MEDIA_WIDTH_XS, sm: MEDIA_WIDTH_DEFAULT } }}>
       <CardActionArea
+        disabled={item.hasDrm}
         onClick={item.hasDrm ? undefined : onClickCallback}
       >
         <AspectRatioBox width={MEDIA_WIDTH_DEFAULT} ratio={16 / 9}>
