@@ -1,23 +1,21 @@
 import React from 'react';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import MediaItem from '../mediaItem/MediaItem';
 import MediaItemSkeleton from '../mediaItem/MediaItemSkeleton';
 import { IMediaItem } from '../../organism/mediaList/state';
 
 interface IProps {
-  isErrorState: boolean;
-  isLoading: boolean;
   items: IMediaItem[];
+  isLoading: boolean;
+  isErrorState: boolean;
 }
 
 const SKELETON_LIST = [...Array(12).keys()];
 
-function MediaList({ isErrorState, items, isLoading }: IProps) {
+function MediaList({ items, isLoading, isErrorState }: IProps) {
   if (isErrorState) {
-    return <div className="mol-media-list__error">Data could not be loaded</div>;
+    return <Typography sx={{ my: 2 }} variant="h3" color="error">Data could not be loaded</Typography>;
   }
-
-  // const isLoading = true;
 
   return (
     <Box component="ul" sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
