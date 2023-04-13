@@ -1,9 +1,8 @@
 import React from 'react';
 import { Box } from '@mui/material';
-import Spinner from '../../atom/spinner/Spinner';
 import MediaItem from '../mediaItem/MediaItem';
+import MediaItemSkeleton from '../mediaItem/MediaItemSkeleton';
 import { IMediaItem } from '../../organism/mediaList/state';
-import './mediaList.css';
 
 interface IProps {
   isErrorState: boolean;
@@ -11,25 +10,31 @@ interface IProps {
   items: IMediaItem[];
 }
 
-function MediaList({ isErrorState, isLoading, items }: IProps) {
+const SKELETON_LIST = [...Array(12).keys()];
+
+function MediaList({ isErrorState, items, isLoading }: IProps) {
   if (isErrorState) {
     return <div className="mol-media-list__error">Data could not be loaded</div>;
   }
 
+  // const isLoading = true;
+
   return (
-    <div>
+    <Box component="ul" sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
       {isLoading
-        ? <Spinner />
+        ? SKELETON_LIST.map((item) => (
+          <Box key={item} sx={{ m: 1, listStyle: 'none' }} component="li">
+            <MediaItemSkeleton />
+          </Box>
+        ))
         : (
-          <ul className="mol-media-list">
-            {items.map((item) => (
-              <Box key={item.id} component="li" sx={{ m: 1 }}>
-                <MediaItem item={item} />
-              </Box>
-            ))}
-          </ul>
+          items.map((item) => (
+            <Box key={item.id} component="li" sx={{ m: 1, listStyle: 'none' }}>
+              <MediaItem item={item} />
+            </Box>
+          ))
         )}
-    </div>
+    </Box>
   );
 }
 

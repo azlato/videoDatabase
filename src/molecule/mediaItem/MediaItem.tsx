@@ -11,7 +11,7 @@ interface IProps {
   item: IMediaItem;
 }
 
-const MEDIA_WIDTH = 320;
+export const MEDIA_WIDTH = 320;
 
 function MediaItem({ item }: IProps) {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -50,7 +50,7 @@ function MediaItem({ item }: IProps) {
           <Video image={item.iconUri} videoRef={videoRef} isPlaying={isPlaying} />
         </AspectRatioBox>
         <CardContent>
-          <Typography gutterBottom variant="h5">
+          <Typography gutterBottom variant="h6" component="h2">
             {item.name}
           </Typography>
           {item.hasDrm
