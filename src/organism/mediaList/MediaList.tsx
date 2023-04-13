@@ -1,4 +1,5 @@
 import React, { useEffect, useCallback } from 'react';
+import { Grid, Paper } from '@mui/material';
 import MediaListMolecule from '../../molecule/mediaList/MediaList';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import Filter, { IFilter, FilterType } from '../../molecule/filter/Filter';
@@ -41,8 +42,16 @@ function MediaList() {
 
   return (
     <>
-      <Filter filters={FILTERS} onChange={onFilterChange} />
-      <Sort fields={SORT} onChange={onSortChange} />
+      <Paper elevation={1} sx={{ p: 4 }}>
+        <Grid container spacing={4}>
+          <Grid item>
+            <Filter filters={FILTERS} onChange={onFilterChange} />
+          </Grid>
+          <Grid item>
+            <Sort fields={SORT} onChange={onSortChange} />
+          </Grid>
+        </Grid>
+      </Paper>
       <MediaListMolecule isErrorState={isErrorState} isLoading={isLoading} items={items} />
     </>
   );

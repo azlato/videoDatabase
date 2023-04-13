@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Paper, Typography, FormControl, TextField, FormGroup,
+  Typography, FormControl, TextField, FormGroup,
 } from '@mui/material';
 import IndeterminateCheckbox from '../../atom/indeterminateCheckbox/IndeterminateCheckbox';
 
@@ -22,9 +22,9 @@ export interface IFilter {
 
 function Filter({ filters, onChange }: IProps) {
   return (
-    <Paper elevation={0} sx={{ p: 2 }}>
+    <>
       <Typography variant="subtitle1">Filters</Typography>
-      <FormGroup row>
+      <FormGroup>
         {filters.map((filter) => (
           <FormControl key={filter.fieldName} sx={{ m: 1, minWidth: 120 }}>
             {filter.type === FilterType.Boolean
@@ -44,7 +44,7 @@ function Filter({ filters, onChange }: IProps) {
           </FormControl>
         ))}
       </FormGroup>
-    </Paper>
+    </>
   );
 }
 
