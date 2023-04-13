@@ -7,7 +7,7 @@
 ## Used technology
 - [React.js](https://react.dev/)
 - [TypeScript](https://www.typescriptlang.org/)
-- [MIU based on Emotion](https://mui.com/material-ui/getting-started/overview/)
+- [MUI based on Emotion](https://mui.com/material-ui/getting-started/overview/)
 - [Vite.js](https://vitejs.dev/)
 - [Redux](https://redux.js.org/)
 - [Redux Toolkit](https://redux-toolkit.js.org/)
