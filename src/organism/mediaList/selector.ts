@@ -2,6 +2,7 @@ import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from '../../store/state';
 import { FilterType } from '../../molecule/filter/Filter';
 import { IMediaItem } from './state';
+import Checked from '../../atom/indeterminateCheckbox/Checked';
 
 const itemsSelector = ({ mediaList: { data: { items } } }: RootState) => items;
 const filtersSelector = ({ mediaList: { filters } }: RootState) => filters;
@@ -21,7 +22,11 @@ export const filteredItemsSelector = createSelector(
               case FilterType.String:
                 return item[itemKey].toString().toLowerCase().includes(filter.value.toLowerCase());
               case FilterType.Boolean:
-                return filter.value === '' || item[itemKey].toString() === filter.value;
+                return (
+                  filter.value === Checked.Unchecked
+                  || (item[itemKey] === true && filter.value === Checked.Checked)
+                  || (item[itemKey] === false && filter.value === Checked.Indeterminate)
+                );
               default:
                 return true;
             }

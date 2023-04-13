@@ -1,40 +1,42 @@
 import React, { useState, useCallback } from 'react';
 import { Checkbox, FormControlLabel } from '@mui/material';
+import Checked from './Checked';
+
+interface ISetting {
+  title: string;
+  icon: string;
+}
 
 interface IProps {
-  label: string;
+  label?: string;
+  defaultValue?: Checked;
+  settings?: { [key: string]: ISetting };
   onChange(value: string): void;
 }
 
-enum Checked {
-  Unchecked = 0,
-  Indeterminate = 1,
-  Checked = 2,
-}
-
-function IndeterminateCheckbox({ label, onChange }: IProps) {
-  const [checked, setCheckedState] = useState(Checked.Unchecked);
+function IndeterminateCheckbox({
+  defaultValue = Checked.Unchecked, label, settings, onChange,
+}: IProps) {
+  const [checked, setCheckedState] = useState(defaultValue);
 
   const onClick = useCallback(() => {
     switch (checked) {
       // unchecked, going indeterminate
       case Checked.Unchecked:
         setCheckedState(Checked.Indeterminate);
-
-        onChange('false');
+        onChange(Checked.Indeterminate);
         break;
 
         // indeterminate, going checked
       case Checked.Indeterminate:
         setCheckedState(Checked.Checked);
-
-        onChange('true');
+        onChange(Checked.Checked);
         break;
 
         // checked, going unchecked
       default:
         setCheckedState(Checked.Unchecked);
-        onChange('');
+        onChange(Checked.Unchecked);
         break;
     }
   }, [checked]);
@@ -46,6 +48,9 @@ function IndeterminateCheckbox({ label, onChange }: IProps) {
         <Checkbox
           checked={checked === Checked.Checked}
           indeterminate={checked === Checked.Indeterminate}
+          checkedIcon={settings && settings[Checked.Checked]?.icon}
+          icon={settings && settings[Checked.Unchecked]?.icon}
+          indeterminateIcon={settings && settings[Checked.Indeterminate]?.icon}
           onClick={onClick}
         />
       )}
