@@ -11,7 +11,8 @@ interface IProps {
   item: IMediaItem;
 }
 
-export const MEDIA_WIDTH = 320;
+export const MEDIA_WIDTH_XS = 280;
+export const MEDIA_WIDTH_DEFAULT = 320;
 
 function MediaItem({ item }: IProps) {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -42,11 +43,11 @@ function MediaItem({ item }: IProps) {
   }, [isPlaying, item]);
 
   return (
-    <Card sx={{ maxWidth: MEDIA_WIDTH }}>
+    <Card sx={{ maxWidth: { xs: MEDIA_WIDTH_XS, sm: MEDIA_WIDTH_DEFAULT } }}>
       <CardActionArea
         onClick={item.hasDrm ? undefined : onClickCallback}
       >
-        <AspectRatioBox width={MEDIA_WIDTH} ratio={16 / 9}>
+        <AspectRatioBox width={MEDIA_WIDTH_DEFAULT} ratio={16 / 9}>
           <Video image={item.iconUri} videoRef={videoRef} isPlaying={isPlaying} />
         </AspectRatioBox>
         <CardContent>
