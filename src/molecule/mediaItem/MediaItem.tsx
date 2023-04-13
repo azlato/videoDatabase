@@ -42,7 +42,7 @@ function MediaItem({ item }: IProps) {
   }, [videoRef.current, isPlaying, item]);
 
   return (
-    <Card sx={{ 'max-width': MEDIA_WIDTH }}>
+    <Card sx={{ maxWidth: MEDIA_WIDTH }}>
       <CardActionArea
         onClick={item.hasDrm ? undefined : onClickCallback}
       >
