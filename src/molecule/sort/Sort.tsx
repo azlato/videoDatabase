@@ -1,9 +1,8 @@
 import React, { useState, useCallback } from 'react';
 import {
-  Paper, FormControl, InputLabel, Select, MenuItem, SelectChangeEvent, Checkbox,
+  Paper, Typography, FormControl, InputLabel, Select, MenuItem, SelectChangeEvent, Checkbox,
 } from '@mui/material';
 import SortByAlphaIcon from '@mui/icons-material/SortByAlpha';
-import './sort.css';
 
 export interface ISort {
   label: string;
@@ -34,7 +33,8 @@ function Sort({ fields, onChange }: IProps) {
   }, [selectValue]);
 
   return (
-    <Paper elevation={0}>
+    <Paper elevation={0} sx={{ p: 2 }}>
+      <Typography variant="subtitle1">Sorting</Typography>
       <FormControl sx={{ m: 1, minWidth: 120 }}>
         <InputLabel id="sort-select-label">Sort by</InputLabel>
         <Select

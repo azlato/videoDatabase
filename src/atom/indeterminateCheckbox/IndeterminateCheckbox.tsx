@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
+import { Checkbox, FormControlLabel } from '@mui/material';
 
 interface IProps {
-  id: string;
-  className?: string;
+  label: string;
   onChange(value: string): void;
 }
 
@@ -12,17 +12,14 @@ enum Checked {
   Checked = 2,
 }
 
-function IndeterminateCheckbox({ className, id, onChange }: IProps) {
+function IndeterminateCheckbox({ label, onChange }: IProps) {
   const [checked, setCheckedState] = useState(Checked.Unchecked);
 
-  const onClick = (event: React.MouseEvent<HTMLInputElement>) => {
-    const el = event.target as HTMLInputElement;
+  const onClick = useCallback(() => {
     switch (checked) {
       // unchecked, going indeterminate
       case Checked.Unchecked:
         setCheckedState(Checked.Indeterminate);
-        el.indeterminate = true;
-        el.checked = false;
 
         onChange('false');
         break;
@@ -30,8 +27,6 @@ function IndeterminateCheckbox({ className, id, onChange }: IProps) {
         // indeterminate, going checked
       case Checked.Indeterminate:
         setCheckedState(Checked.Checked);
-        el.indeterminate = false;
-        el.checked = true;
 
         onChange('true');
         break;
@@ -39,19 +34,21 @@ function IndeterminateCheckbox({ className, id, onChange }: IProps) {
         // checked, going unchecked
       default:
         setCheckedState(Checked.Unchecked);
-        el.indeterminate = false;
-        el.checked = false;
         onChange('');
         break;
     }
-  };
+  }, [checked]);
 
   return (
-    <input
-      id={id}
-      className={className}
-      type="checkbox"
-      onClick={onClick}
+    <FormControlLabel
+      label={label}
+      control={(
+        <Checkbox
+          checked={checked === Checked.Checked}
+          indeterminate={checked === Checked.Indeterminate}
+          onClick={onClick}
+        />
+      )}
     />
   );
 }

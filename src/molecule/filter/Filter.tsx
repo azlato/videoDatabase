@@ -1,10 +1,10 @@
 import React from 'react';
-import classnames from 'classnames';
-import './filter.css';
+import {
+  Paper, Typography, FormControl, TextField, FormGroup,
+} from '@mui/material';
 import IndeterminateCheckbox from '../../atom/indeterminateCheckbox/IndeterminateCheckbox';
 
 interface IProps {
-  className?: string;
   filters: IFilter[];
   onChange(filter: IFilter, value: string): void;
 }
@@ -20,34 +20,31 @@ export interface IFilter {
   type: FilterType;
 }
 
-function Filter({ className, filters, onChange }: IProps) {
+function Filter({ filters, onChange }: IProps) {
   return (
-    <div className={classnames(className, 'mol-filter')}>
-      <div className="mol-filter__heading">Filters:</div>
-      {filters.map((filter) => (
-        <div key={filter.fieldName} className="mol-filter__item">
-          <label htmlFor={`control-${filter.fieldName}`} className="mol-filter__item-label">
-            {filter.label}
+    <Paper elevation={0} sx={{ p: 2 }}>
+      <Typography variant="subtitle1">Filters</Typography>
+      <FormGroup row>
+        {filters.map((filter) => (
+          <FormControl key={filter.fieldName} sx={{ m: 1, minWidth: 120 }}>
             {filter.type === FilterType.Boolean
               ? (
                 <IndeterminateCheckbox
-                  id={`control-${filter.fieldName}`}
-                  className="mol-filter__item-input"
+                  label="DRM"
                   onChange={(value: string) => onChange(filter, value)}
                 />
               )
               : (
-                <input
-                  id={`control-${filter.fieldName}`}
-                  className="mol-filter__item-input"
-                  type="search"
+                <TextField
+                  label={filter.label}
+                  variant="outlined"
                   onChange={(event) => onChange(filter, event.target.value)}
                 />
               )}
-          </label>
-        </div>
-      ))}
-    </div>
+          </FormControl>
+        ))}
+      </FormGroup>
+    </Paper>
   );
 }
 
