@@ -1,4 +1,5 @@
 import React from 'react';
+import { Box } from '@mui/material';
 import Spinner from '../../atom/spinner/Spinner';
 import MediaItem from '../mediaItem/MediaItem';
 import { IMediaItem } from '../../organism/mediaList/state';
@@ -21,7 +22,11 @@ function MediaList({ isErrorState, isLoading, items }: IProps) {
         ? <Spinner />
         : (
           <ul className="mol-media-list">
-            {items.map((item) => (<li key={item.id}><MediaItem item={item} /></li>))}
+            {items.map((item) => (
+              <Box key={item.id} component="li" sx={{ m: 1 }}>
+                <MediaItem item={item} />
+              </Box>
+            ))}
           </ul>
         )}
     </div>

@@ -1,16 +1,17 @@
 import React from 'react';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
 import Header from './organism/header/Header';
 import MediaList from './organism/mediaList/MediaList';
-import './App.css';
 
 function App() {
   return (
-    <div className="App">
+    <Box>
       <Header />
-      <div className="app-layout">
+      <Container maxWidth="xl" sx={{ p: 3 }}>
         <MediaList />
-      </div>
-    </div>
+      </Container>
+    </Box>
   );
 }
 

@@ -1,24 +1,28 @@
-import React, { useState, useRef } from 'react';
-import classnames from 'classnames';
-import ShakaPlayer from 'shaka-player-react';
-import 'shaka-player-react/dist/controls.css';
+import React, { useState, useRef, useCallback } from 'react';
+import {
+  CardActionArea, Card, Typography, CardContent, Chip,
+} from '@mui/material';
+import { IPlayer, IPlayerRef } from '../../shaka-player-react';
 import { IMediaItem } from '../../organism/mediaList/state';
-import './mediaItem.css';
+import AspectRatioBox from '../../atom/aspectRatioBox/AspectRatioBox';
+import Video from '../../atom/video/Video';
 
 interface IProps {
   item: IMediaItem;
 }
 
+const MEDIA_WIDTH = 320;
+
 function MediaItem({ item }: IProps) {
   const [isPlaying, setIsPlaying] = useState(false);
-  const videoRef = useRef<{ player: any; videoElement: HTMLVideoElement }>(null);
+  const videoRef = useRef<IPlayerRef>(null);
 
-  async function loadAsset(url: string, player: any, videoElement: HTMLVideoElement) {
+  async function loadAsset(url: string, player: IPlayer, videoElement: HTMLVideoElement) {
     await player.load(url);
     videoElement.play();
   }
 
-  const onClickCallback = () => {
+  const onClickCallback = useCallback(() => {
     if (!videoRef.current) {
       return;
     }
@@ -35,32 +39,25 @@ function MediaItem({ item }: IProps) {
       setIsPlaying(true);
       loadAsset(item.manifestUri, player, videoElement);
     }
-  };
+  }, [videoRef.current, isPlaying, item]);
 
   return (
-    <button
-      type="button"
-      className={classnames({
-        'mol-media-item': true,
-        'mol-media-item--drm-protection': item.hasDrm,
-        'mol-media-item--playable': !isPlaying && !item.hasDrm,
-      })}
-      onClick={item.hasDrm ? undefined : onClickCallback}
-    >
-      <div className="mol-media-item__media">
-        <img
-          className={!isPlaying ? 'mol-media-item__image' : 'mol-media-item__image mol-media-item__image--hidden'}
-          src={item.iconUri}
-          alt=""
-        />
-        <ShakaPlayer
-          className={isPlaying ? 'mol-media-item__video' : 'mol-media-item__video mol-media-item__video--hidden'}
-          ref={videoRef}
-        />
-        ;
-      </div>
-      <h2 className="mol-media-item__name">{item.name}</h2>
-    </button>
+    <Card sx={{ 'max-width': MEDIA_WIDTH }}>
+      <CardActionArea
+        onClick={item.hasDrm ? undefined : onClickCallback}
+      >
+        <AspectRatioBox width={MEDIA_WIDTH} ratio={16 / 9}>
+          <Video image={item.iconUri} videoRef={videoRef} isPlaying={isPlaying} />
+        </AspectRatioBox>
+        <CardContent>
+          <Typography gutterBottom variant="h5">
+            {item.name}
+          </Typography>
+          {item.hasDrm
+            && <Chip label="DRM" color="error" variant="outlined" />}
+        </CardContent>
+      </CardActionArea>
+    </Card>
   );
 }
 

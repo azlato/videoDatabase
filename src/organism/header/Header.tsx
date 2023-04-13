@@ -1,11 +1,35 @@
 import React from 'react';
-import './header.css';
+import AppBar from '@mui/material/AppBar';
+import Container from '@mui/material/Container';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
 
 function Header() {
   return (
-    <div className="ogm-header">
-      <h1 className="ogm-header__title">Video database</h1>
-    </div>
+    <>
+      <AppBar>
+        <Container maxWidth="xl">
+          <Toolbar>
+            <Typography
+              variant="h6"
+              noWrap
+              component="a"
+              href="/"
+              sx={{
+                mr: 2,
+                display: { xs: 'none', md: 'flex' },
+                fontWeight: 700,
+                color: 'inherit',
+                textDecoration: 'none',
+              }}
+            >
+              Video database
+            </Typography>
+          </Toolbar>
+        </Container>
+      </AppBar>
+      <Toolbar />
+    </>
   );
 }
 
