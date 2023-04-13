@@ -17,12 +17,12 @@ function MediaItem({ item }: IProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const videoRef = useRef<IPlayerRef>(null);
 
-  async function loadAsset(url: string, player: IPlayer, videoElement: HTMLVideoElement) {
-    await player.load(url);
-    videoElement.play();
-  }
-
   const onClickCallback = useCallback(() => {
+    async function loadAsset(url: string, player: IPlayer, videoElement: HTMLVideoElement) {
+      await player.load(url);
+      videoElement.play();
+    }
+
     if (!videoRef.current) {
       return;
     }
@@ -39,7 +39,7 @@ function MediaItem({ item }: IProps) {
       setIsPlaying(true);
       loadAsset(item.manifestUri, player, videoElement);
     }
-  }, [videoRef.current, isPlaying, item]);
+  }, [isPlaying, item]);
 
   return (
     <Card sx={{ maxWidth: MEDIA_WIDTH }}>
