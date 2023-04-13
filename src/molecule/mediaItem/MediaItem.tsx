@@ -2,7 +2,7 @@ import React, { useState, useRef, useCallback } from 'react';
 import {
   CardActionArea, Card, Typography, CardContent, Chip,
 } from '@mui/material';
-import { IPlayer, IPlayerRef } from '../../shaka-player-react';
+import { IPlayer, IPlayerRef } from 'shaka-player-react';
 import { IMediaItem } from '../../organism/mediaList/state';
 import AspectRatioBox from '../../atom/aspectRatioBox/AspectRatioBox';
 import Video from '../../atom/video/Video';

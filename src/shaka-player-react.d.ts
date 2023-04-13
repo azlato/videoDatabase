@@ -1,16 +1,16 @@
-export interface IPlayer {
-  async load(string): Promise<unknown>;
-}
-
-interface IPlayerRef {
-  player: IPlayer;
-  videoElement: HTMLVideoElement;
-}
-
 declare module 'shaka-player-react' {
+  export interface IPlayer {
+    async load(string): Promise<unknown>;
+  }
+
+  export interface IPlayerRef {
+    player: IPlayer;
+    videoElement: HTMLVideoElement;
+  }
+
   function ShakaPlayer(
     prop: {
-      className: string;
+      className?: string;
       ref: React.Ref<IPlayerRef>
     }
   ): React.ReactElement;
