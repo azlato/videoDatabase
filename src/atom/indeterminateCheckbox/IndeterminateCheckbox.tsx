@@ -2,9 +2,9 @@ import React, { useState, useCallback } from 'react';
 import { Checkbox, FormControlLabel } from '@mui/material';
 import Checked from './Checked';
 
-interface ISetting {
+export interface ISetting {
   title: string;
-  icon: string;
+  icon: React.ReactNode;
 }
 
 interface IProps {
@@ -51,6 +51,7 @@ function IndeterminateCheckbox({
           checkedIcon={settings && settings[Checked.Checked]?.icon}
           icon={settings && settings[Checked.Unchecked]?.icon}
           indeterminateIcon={settings && settings[Checked.Indeterminate]?.icon}
+          title={settings && settings[checked]?.title}
           onClick={onClick}
         />
       )}
